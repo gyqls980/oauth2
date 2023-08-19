@@ -46,6 +46,7 @@ public class MemberController {
         member.setEmail(form.getEmail());
         member.setPassword(form.getPassword());
         member.setRole(form.getRole());
+        member.setProvider("hello shop");
 
         memberService.join(member);
 
@@ -73,7 +74,7 @@ public class MemberController {
         if(pwEncoder.passwordEncoder().matches(rawPw, decodePw)){
             HttpSession session = request.getSession();
             session.setAttribute("loginName", memberInfo.get().getName());
-            session.setAttribute("loginRole", memberInfo.get().getRole());
+            session.setAttribute("loginRole", memberInfo.get().getRole().getTitle());
             return "home";
         }
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import weblogin.oauth2.domain.MemberRole;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,7 +30,7 @@ public class OAuthController {
 
         HttpSession session = request.getSession();
         session.setAttribute("loginName", attributes.get("name"));
-        session.setAttribute("loginRole", "구글로그인 회원");
+        session.setAttribute("loginRole", MemberRole.valueOf("USER").getTitle());
 
         return "redirect:/";
         //return attributes.toString();

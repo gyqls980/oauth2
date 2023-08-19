@@ -17,7 +17,7 @@
                 <td th:text="${member.id}"></td>
                 <td th:text="${member.name}"></td>
                 <td th:text="${member.email}"></td>
-                <td th:text="${member.role}"></td>
+                <td th:text="${member.role.getTitle()}"></td>
             </tr>
             </tbody>
         </table>

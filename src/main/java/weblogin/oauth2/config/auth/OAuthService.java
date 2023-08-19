@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import weblogin.oauth2.domain.Member;
+import weblogin.oauth2.domain.MemberRole;
 import weblogin.oauth2.repository.MemberRepository;
 import weblogin.oauth2.service.MemberService;
 
@@ -47,6 +48,8 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         Member member = new Member();
         member.setName((String)attributes.get("name"));
         member.setEmail((String)attributes.get("email"));
+        //google login -> USER_ROLE
+        member.setRole(MemberRole.valueOf("USER"));
         member.setProvider(registrationId);
         Long memberId = memberService.oauthJoin(member);
 

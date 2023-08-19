@@ -30,7 +30,7 @@
       <select class="form-control" th:field="*{role}">
         <option th:each="roleValue : ${T(weblogin.oauth2.domain.MemberRole).values()}"
                 th:value="${roleValue}"
-                th:text="${roleValue}" placeholder="계정을 선택하세요일"></option>
+                th:text="${roleValue.getTitle()}" placeholder="계정을 선택하세요"></option>
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
