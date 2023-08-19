@@ -14,10 +14,7 @@ import weblogin.oauth2.domain.MemberRole;
 import weblogin.oauth2.repository.MemberRepository;
 import weblogin.oauth2.service.MemberService;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,13 +43,16 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         Map<String, Object> attributes = oAuth2User.getAttributes(); //oauth 서비스의 유저 정보들
 
         Member member = new Member();
-        member.setName((String)attributes.get("name"));
-        member.setEmail((String)attributes.get("email"));
-        //google login -> USER_ROLE
-        member.setRole(MemberRole.valueOf("USER"));
+        member.setName((String) attributes.get("name"));
+        member.setEmail((String) attributes.get("email"));
+        member.setRole(MemberRole.valueOf("USER")); //google login -> only USER
         member.setProvider(registrationId);
-        Long memberId = memberService.oauthJoin(member);
 
+        List<Member> members = memberRepository.findByEmail((String)attributes.get("email"));
+        if(members.isEmpty()) {
+            // 가입 이력이 없는 회원일 경우 회원가입
+            Long memberId = memberService.oauthJoin(member);
+        }
         Map<String, Object> customAttribute = customAttribute(attributes, userNameAttributeName, member, registrationId);
 
         return new DefaultOAuth2User(
