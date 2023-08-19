@@ -48,7 +48,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         member.setName((String)attributes.get("name"));
         member.setEmail((String)attributes.get("email"));
         member.setProvider(registrationId);
-        Long memberId = memberService.join(member);
+        Long memberId = memberService.oauthJoin(member);
 
         Map<String, Object> customAttribute = customAttribute(attributes, userNameAttributeName, member, registrationId);
 

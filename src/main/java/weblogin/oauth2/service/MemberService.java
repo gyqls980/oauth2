@@ -24,13 +24,20 @@ public class MemberService {
     public Long join(Member member) {
         validateDuplicateMember(member);
 
-        if(!member.getPassword().isEmpty()){
-            String rawPw = "";
-            String encodePw = "";
-            rawPw = member.getPassword();
-            encodePw = pwEncoder.passwordEncoder().encode(rawPw);
-            member.setPassword(encodePw);
-        }
+        String rawPw = "";
+        String encodePw = "";
+        rawPw = member.getPassword();
+        encodePw = pwEncoder.passwordEncoder().encode(rawPw);
+        member.setPassword(encodePw);
+
+
+        memberRepository.save(member);
+
+        return member.getId();
+    }
+
+    @Transactional
+    public Long oauthJoin(Member member) {
 
         memberRepository.save(member);
 
